@@ -12,7 +12,7 @@ export default function MainLayout({
 			<header className='sticky top-0 flex h-16 items-center gap-4 bg-background px-4 md:px-6'>
 				<Navbar />
 			</header>
-			<div className='flex w-full p-4'>{children}</div>
+			<div className='p-4'>{children}</div>
 		</main>
 	)
 }
