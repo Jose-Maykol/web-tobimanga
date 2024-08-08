@@ -1,7 +1,8 @@
+import { API_URL } from '@/config/env'
 import axios from 'axios'
 
 const api = axios.create({
-	baseURL: 'http://localhost:8000/api',
+	baseURL: `${API_URL}/api`,
 	timeout: 5000
 })
 

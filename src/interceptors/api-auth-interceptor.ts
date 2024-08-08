@@ -1,8 +1,9 @@
+import { API_URL } from '@/config/env'
 import axios from 'axios'
 import { cookies } from 'next/headers'
 
 const apiAuth = axios.create({
-	baseURL: 'http://localhost:8000/api',
+	baseURL: `${API_URL}/api`,
 	timeout: 5000
 })
 

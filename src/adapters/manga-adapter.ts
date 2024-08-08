@@ -3,7 +3,7 @@ import { ApiManga, Manga } from '@/types/manga'
 import { Paginated } from '@/types/pagination'
 
 class MangaAdapter {
-	static async getByPage({ page, limit } = { page: 1, limit: 10 }): Promise<Paginated<Manga>> {
+	public async getByPage({ page, limit } = { page: 1, limit: 10 }): Promise<Paginated<Manga>> {
 		const response = await mangaService.getByPage({ page, limit })
 		const { mangas, pagination } = response
 		return {
