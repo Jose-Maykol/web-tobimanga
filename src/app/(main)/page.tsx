@@ -1,18 +1,26 @@
 'use client'
 
-import { mangaAdapter } from '@/adapters/manga-adapter'
+import { mangaService } from '@/services/api/manga-service'
 import { useQuery } from '@tanstack/react-query'
+import Loader from '../_components/loader/loader'
 
 export default function HomePage() {
 	const { isPending, isError, data } = useQuery({
 		queryKey: ['mangas'],
 		queryFn: async () => {
-			return await mangaAdapter.getByPage({ page: 1, limit: 10 })
+			return await mangaService.getByPage({ page: 1, limit: 10 })
 		}
 	})
 
 	if (isPending) {
-		return <div>Loading...</div>
+		return (
+			<div
+				className='flex w-full items-center justify-center'
+				style={{ height: 'calc(100vh - 96px)' }}
+			>
+				<Loader />
+			</div>
+		)
 	}
 
 	if (isError) {
