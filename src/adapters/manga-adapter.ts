@@ -1,11 +1,15 @@
-import { mangaService } from '@/services/api/manga-service'
+import api from '@/interceptors/api-interceptor'
 import { ApiManga, Manga } from '@/types/manga'
 import { Paginated } from '@/types/pagination'
 
 class MangaAdapter {
-	public async getByPage({ page, limit } = { page: 1, limit: 10 }): Promise<Paginated<Manga>> {
-		const response = await mangaService.getByPage({ page, limit })
-		const { mangas, pagination } = response
+	public async getByPage(
+		{ page, limit } = { page: 1, limit: 10 }
+	): Promise<Paginated<Partial<Manga>>> {
+		const response = await api.get(`/mangas`, {
+			params: { page, limit }
+		})
+		const { mangas, pagination } = response.data
 		return {
 			items: mangas.map((manga: Partial<ApiManga>) => ({
 				id: manga.id,
