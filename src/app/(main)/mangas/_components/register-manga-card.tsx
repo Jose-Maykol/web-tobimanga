@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import Link from 'next/link'
 
 export default function RegisterMangaCard() {
 	return (
@@ -12,7 +13,9 @@ export default function RegisterMangaCard() {
 				</CardDescription>
 			</CardHeader>
 			<CardFooter>
-				<Button>Registrar nuevo manga</Button>
+				<Link href='/mangas/register' prefetch={false}>
+					<Button>Registrar nuevo manga</Button>
+				</Link>
 			</CardFooter>
 		</Card>
 	)

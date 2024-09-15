@@ -1,4 +1,3 @@
-import { MangasTable } from './_components/mangas-table'
 import MangasTableContainer from './_components/mangas-table-container'
 import NewChaptersCard from './_components/new-chapters-card'
 import RegisterMangaCard from './_components/register-manga-card'

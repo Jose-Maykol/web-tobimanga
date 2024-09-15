@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Check, ChevronsUpDown } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -29,21 +29,31 @@ interface option {
 }
 
 export function MultipleSelector({ options, placeholder, value, onChange }: MultipleSelectorProps) {
-	const [open, setOpen] = React.useState(false)
+	const [open, setOpen] = useState(false)
 
 	const handleSetValue = (val: string) => {
 		const newValue = value.includes(val) ? value.filter((item) => item !== val) : [...value, val]
 		onChange(newValue)
 	}
 
+	const [contentWidth, setContentWidth] = useState<number | undefined>(undefined)
+	const buttonRef = useRef<HTMLButtonElement>(null)
+
+	useEffect(() => {
+		if (buttonRef.current) {
+			setContentWidth(buttonRef.current.offsetWidth)
+		}
+	}, [])
+
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
 				<Button
+					ref={buttonRef}
 					variant='outline'
 					role='combobox'
 					aria-expanded={open}
-					className='w-[480px] justify-between h-auto'
+					className='w-full justify-between h-auto'
 				>
 					<div className='flex flex-row gap-2 justify-start flex-wrap'>
 						{value?.length
@@ -60,7 +70,10 @@ export function MultipleSelector({ options, placeholder, value, onChange }: Mult
 					<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className='w-[480px] p-0'>
+			<PopoverContent
+				className='w-full min-w-full lg:w-[480px] p-0'
+				style={{ width: contentWidth }}
+			>
 				<Command>
 					<CommandInput placeholder={placeholder} />
 					<CommandEmpty>No se encontraron resultados</CommandEmpty>
