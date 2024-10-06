@@ -27,6 +27,7 @@ import { z } from 'zod'
 import ImageInput from './image-input'
 import AuthorSelect from './author-select'
 import GenreSelect from './genre-select'
+import DemographySelect from './demography-select'
 
 export const formSchema = z.object({
 	title: z.string(),
@@ -195,31 +196,7 @@ export default function RegisterMangaForm() {
 								</FormItem>
 							)}
 						/>
-						<FormField
-							control={form.control}
-							name='demography'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Demografía</FormLabel>
-									<FormControl>
-										<Select onValueChange={field.onChange} defaultValue={field.value}>
-											<SelectTrigger>
-												<SelectValue placeholder='Selecciona una demografía' {...field} />
-											</SelectTrigger>
-											<SelectContent>
-												<SelectGroup>
-													<SelectItem value='shonen'>Shonen</SelectItem>
-													<SelectItem value='shojo'>Shojo</SelectItem>
-													<SelectItem value='seinen'>Seinen</SelectItem>
-													<SelectItem value='josei'>Josei</SelectItem>
-												</SelectGroup>
-											</SelectContent>
-										</Select>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						<DemographySelect control={form.control} />
 						<GenreSelect control={form.control} />
 					</div>
 				</div>
