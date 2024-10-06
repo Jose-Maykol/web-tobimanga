@@ -1,6 +1,6 @@
 import { API_URL } from '@/config/env'
 import axios from 'axios'
-import { cookies } from 'next/headers'
+import Cookies from 'js-cookie'
 
 const apiAuth = axios.create({
 	baseURL: `${API_URL}/api`,
@@ -9,7 +9,7 @@ const apiAuth = axios.create({
 
 apiAuth.interceptors.request.use(
 	(config) => {
-		const cookieStore = cookies()
+		const cookieStore = Cookies
 		const token = cookieStore.get('token')
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`
