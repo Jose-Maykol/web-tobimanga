@@ -2,7 +2,7 @@ import apiAuth from '@/interceptors/api-auth-interceptor'
 import { ApiAuthor, CreateAuthor } from '@/types/author'
 
 class AuthorAdapter {
-	public async getAllAuthors() {
+	public async getAllAuthors(): Promise<{ authors: { value: string; label: string }[] }> {
 		const response = await apiAuth.get(`/authors`)
 		const { authors } = response.data
 		return {

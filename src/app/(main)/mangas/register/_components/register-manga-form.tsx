@@ -24,9 +24,11 @@ import { Textarea } from '@/components/ui/textarea'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import InputImage from './input-image'
+import ImageInput from './image-input'
+import AuthorSelect from './author-select'
+import GenreSelect from './genre-select'
 
-const formSchema = z.object({
+export const formSchema = z.object({
 	title: z.string(),
 	sinopsis: z.string(),
 	chapters: z.number().int().positive(),
@@ -69,7 +71,7 @@ export default function RegisterMangaForm() {
 							<FormItem>
 								<FormLabel>Imagen de banner</FormLabel>
 								<FormControl>
-									<InputImage
+									<ImageInput
 										id='banner'
 										placeholder='Selecciona una imagen de banner'
 										onChange={field.onChange}
@@ -89,7 +91,7 @@ export default function RegisterMangaForm() {
 									<FormItem>
 										<FormLabel>Imagen de portada</FormLabel>
 										<FormControl>
-											<InputImage
+											<ImageInput
 												id='cover'
 												placeholder='Selecciona una imagen de portada'
 												onChange={field.onChange}
@@ -135,28 +137,7 @@ export default function RegisterMangaForm() {
 						</div>
 					</div>
 					<div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
-						<FormField
-							control={form.control}
-							name='authors'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Autor(es)</FormLabel>
-									<FormControl>
-										<MultipleSelector
-											options={[
-												{ value: 'author-1', label: 'Autor 1' },
-												{ value: 'author-2', label: 'Autor 2' },
-												{ value: 'author-3', label: 'Autor 3' }
-											]}
-											placeholder='Selecciona autor(es)'
-											value={field.value}
-											onChange={field.onChange}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						<AuthorSelect control={form.control} />
 						<FormField
 							control={form.control}
 							name='publicationStatus'
@@ -239,35 +220,7 @@ export default function RegisterMangaForm() {
 								</FormItem>
 							)}
 						/>
-						<FormField
-							control={form.control}
-							name='genres'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Géneros</FormLabel>
-									<FormControl>
-										<MultipleSelector
-											options={[
-												{ value: 'action', label: 'Acción' },
-												{ value: 'adventure', label: 'Aventura' },
-												{ value: 'comedy', label: 'Comedia' },
-												{ value: 'drama', label: 'Drama' },
-												{ value: 'fantasy', label: 'Fantasía' },
-												{ value: 'horror', label: 'Horror' },
-												{ value: 'mystery', label: 'Misterio' },
-												{ value: 'romance', label: 'Romance' },
-												{ value: 'sci-fi', label: 'Ciencia ficción' },
-												{ value: 'slice-of-life', label: 'Slice of life' }
-											]}
-											placeholder='Selecciona géneros'
-											value={field.value}
-											onChange={field.onChange}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						<GenreSelect control={form.control} />
 					</div>
 				</div>
 				<Button type='submit' className='w-full'>

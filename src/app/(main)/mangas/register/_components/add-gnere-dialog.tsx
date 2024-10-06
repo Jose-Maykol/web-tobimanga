@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import {
 	Dialog,
 	DialogClose,
@@ -8,30 +9,29 @@ import {
 	DialogTrigger
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Plus } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
-import { toast } from 'sonner'
-import { authorService } from '@/services/api/author-service'
+import { genreService } from '@/services/api/genre-service'
 import { useQueryClient } from '@tanstack/react-query'
+import { Plus } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
-export default function AddAuthorDialog() {
+export default function AddGnereDialog() {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const queryClient = useQueryClient()
 
 	const handleSave = async (event: React.FormEvent) => {
 		event.preventDefault()
 		const formData = new FormData(event.target as HTMLFormElement)
-		const newAuthor = formData.get('author-name') as string
+		const newGenre = formData.get('genre-name') as string
 
 		try {
-			const response = await authorService.createAuthor({
-				name: newAuthor
+			const response = await genreService.createGenre({
+				name: newGenre
 			})
 			if (response) {
 				queryClient.refetchQueries({
-					queryKey: ['authors'],
+					queryKey: ['genres'],
 					exact: true
 				})
 				setIsOpen(false)
@@ -40,7 +40,7 @@ export default function AddAuthorDialog() {
 		} catch (error) {
 			//TODO: Manejar errores
 			console.error(error)
-			toast.error('Ocurrió un error al crear el autor')
+			toast.error('Ocurrió un error al crear el género')
 		}
 	}
 
@@ -53,19 +53,19 @@ export default function AddAuthorDialog() {
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Crea un nuevo autor</DialogTitle>
+					<DialogTitle>Crea un nuevo género</DialogTitle>
 				</DialogHeader>
-				<form onSubmit={handleSave} id='author-form'>
+				<form onSubmit={handleSave} id='genre-form'>
 					<div className='flex flex-col gap-2'>
-						<Label htmlFor='author-name' className='text-muted-foreground'>
+						<Label htmlFor='genre-name' className='text-muted-foreground'>
 							Nombre del autor
 						</Label>
-						<Input name='author-name' id='author-name' />
+						<Input name='genre-name' id='genre-name' />
 					</div>
 				</form>
 				<DialogFooter>
 					<div className='flex flex-row gap-4'>
-						<Button type='submit' form='author-form'>
+						<Button type='submit' form='genre-form'>
 							Guardar
 						</Button>
 						<DialogClose>
