@@ -28,20 +28,27 @@ import ImageInput from './image-input'
 import AuthorSelect from './author-select'
 import GenreSelect from './genre-select'
 import DemographySelect from './demography-select'
+import ReleaseYearDatePicker from './release-year-date-picker'
 
 export const formSchema = z.object({
 	title: z.string(),
 	sinopsis: z.string(),
 	chapters: z.number().int().positive(),
-	releaseYear: z.number().int().positive(),
+	releaseYear: z.date(),
 	publicationStatus: z.string({
 		required_error: 'Debes seleccionar un estado de publicación'
 	}),
 	genres: z.array(z.string()),
 	authors: z.array(z.string()),
 	demography: z.string(),
-	bannerImage: z.string(),
-	coverImage: z.string()
+	bannerImage: z.object({
+		contentType: z.string(),
+		data: z.string()
+	}),
+	coverImage: z.object({
+		contentType: z.string(),
+		data: z.string()
+	})
 })
 
 export default function RegisterMangaForm() {
@@ -51,7 +58,6 @@ export default function RegisterMangaForm() {
 			title: '',
 			sinopsis: '',
 			chapters: 0,
-			releaseYear: 1900,
 			genres: [],
 			authors: []
 		}
@@ -183,19 +189,7 @@ export default function RegisterMangaForm() {
 								</FormItem>
 							)}
 						/>
-						<FormField
-							control={form.control}
-							name='releaseYear'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Año de lanzamiento</FormLabel>
-									<FormControl>
-										<Input placeholder='Año de lanzamiento' type='number' {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						<ReleaseYearDatePicker control={form.control} />
 						<DemographySelect control={form.control} />
 						<GenreSelect control={form.control} />
 					</div>

@@ -22,7 +22,6 @@ export default function ImageInput({ onChange, placeholder, className, id }: Ima
 		if (file) {
 			const reader = new FileReader()
 			reader.onloadend = () => {
-				console.log(reader)
 				setPreview(reader.result as string)
 				onChange({
 					contentType: file.type,
