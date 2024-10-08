@@ -28,19 +28,21 @@ import ImageInput from './image-input'
 import AuthorSelect from './author-select'
 import GenreSelect from './genre-select'
 import DemographySelect from './demography-select'
-import ReleaseYearDatePicker from './release-year-date-picker'
+import { mangaService } from '@/services/api/manga-service'
+import { toast } from 'sonner'
+import ReleaseDateInput from './release-date-input'
 
 export const formSchema = z.object({
-	title: z.string(),
+	originalName: z.string(),
 	sinopsis: z.string(),
 	chapters: z.number().int().positive(),
-	releaseYear: z.date(),
+	releaseDate: z.date(),
 	publicationStatus: z.string({
 		required_error: 'Debes seleccionar un estado de publicación'
 	}),
 	genres: z.array(z.string()),
 	authors: z.array(z.string()),
-	demography: z.string(),
+	demographic: z.string(),
 	bannerImage: z.object({
 		contentType: z.string(),
 		data: z.string()
@@ -55,7 +57,7 @@ export default function RegisterMangaForm() {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			title: '',
+			originalName: '',
 			sinopsis: '',
 			chapters: 0,
 			genres: [],
@@ -63,8 +65,18 @@ export default function RegisterMangaForm() {
 		}
 	})
 
-	const onSubmit = (values: z.infer<typeof formSchema>) => {
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		console.log(values)
+		try {
+			const response = await mangaService.createManga(values)
+			if (response) {
+				toast.success(response.message)
+			}
+		} catch (error) {
+			//TODO: Manejar errores
+			console.error(error)
+			toast.error('Ocurrió un error al registrar el manga')
+		}
 	}
 
 	return (
@@ -114,7 +126,7 @@ export default function RegisterMangaForm() {
 							<div>
 								<FormField
 									control={form.control}
-									name='title'
+									name='originalName'
 									render={({ field }) => (
 										<FormItem>
 											<FormLabel>Nombre del manga</FormLabel>
@@ -158,11 +170,11 @@ export default function RegisterMangaForm() {
 											</SelectTrigger>
 											<SelectContent>
 												<SelectGroup>
-													<SelectItem value='finished'>Finalizado</SelectItem>
-													<SelectItem value='releasing'>En emisión</SelectItem>
-													<SelectItem value='hiatus'>En pausa</SelectItem>
-													<SelectItem value='cancelled'>Cancelado</SelectItem>
-													<SelectItem value='not yet released'>No lanzado</SelectItem>
+													<SelectItem value='FINISHED'>Finalizado</SelectItem>
+													<SelectItem value='ONGOING'>En emisión</SelectItem>
+													<SelectItem value='HIATUS'>En pausa</SelectItem>
+													<SelectItem value='CANCELLED'>Cancelado</SelectItem>
+													<SelectItem value='NOT_YET_RELEASED'>No lanzado</SelectItem>
 												</SelectGroup>
 											</SelectContent>
 										</Select>
@@ -189,7 +201,7 @@ export default function RegisterMangaForm() {
 								</FormItem>
 							)}
 						/>
-						<ReleaseYearDatePicker control={form.control} />
+						<ReleaseDateInput control={form.control} />
 						<DemographySelect control={form.control} />
 						<GenreSelect control={form.control} />
 					</div>

@@ -1,5 +1,5 @@
 import api from '@/interceptors/api-interceptor'
-import { ApiManga, Manga } from '@/types/manga'
+import { ApiManga, CreateManga, Manga } from '@/types/manga'
 import { Paginated } from '@/types/pagination'
 
 class MangaAdapter {
@@ -26,6 +26,17 @@ class MangaAdapter {
 				hasNextPage: pagination.hasNextPage,
 				hasPreviousPage: pagination.hasPreviousPage
 			}
+		}
+	}
+
+	public async createManga(
+		manga: CreateManga
+	): Promise<{ message: string; manga: Partial<Manga> }> {
+		const response = await api.post(`/mangas`, manga)
+
+		return {
+			message: response.data.message,
+			manga: response.data.manga
 		}
 	}
 }

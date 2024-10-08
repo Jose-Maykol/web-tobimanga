@@ -9,15 +9,15 @@ import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import { Calendar } from '@/components/ui/calendar'
 
-interface ReleaseYearDatePickerProps {
+interface ReleaseDateInputProps {
 	control: Control<z.infer<typeof formSchema>>
 }
 
-export default function ReleaseYearDatePicker({ control }: ReleaseYearDatePickerProps) {
+export default function ReleaseDateInput({ control }: ReleaseDateInputProps) {
 	return (
 		<FormField
 			control={control}
-			name='releaseYear'
+			name='releaseDate'
 			render={({ field }) => (
 				<FormItem className='flex flex-col'>
 					<FormLabel>Año de lanzamiento</FormLabel>

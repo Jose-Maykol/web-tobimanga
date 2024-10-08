@@ -36,7 +36,7 @@ export default function DemographySelect({ control }: DemographySelectProps) {
 	return (
 		<FormField
 			control={control}
-			name='demography'
+			name='demographic'
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>Demografía</FormLabel>

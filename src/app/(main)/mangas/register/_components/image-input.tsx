@@ -22,10 +22,12 @@ export default function ImageInput({ onChange, placeholder, className, id }: Ima
 		if (file) {
 			const reader = new FileReader()
 			reader.onloadend = () => {
+				const data = reader.result as string
+				const base64 = data.split(',')[1]
 				setPreview(reader.result as string)
 				onChange({
 					contentType: file.type,
-					data: reader.result as string
+					data: base64
 				})
 			}
 			reader.readAsDataURL(file)

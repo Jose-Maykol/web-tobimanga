@@ -23,3 +23,21 @@ export interface ApiManga {
 	created_at: string
 	updated_at: string
 }
+
+export interface CreateManga {
+	authors: string[]
+	bannerImage: {
+		contentType: string
+		data: string
+	}
+	coverImage: {
+		contentType: string
+		data: string
+	}
+	demographic: string
+	genres: string[]
+	publicationStatus: string
+	releaseDate: Date
+	sinopsis: string
+	originalName: string
+}
