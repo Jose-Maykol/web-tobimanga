@@ -32,7 +32,7 @@ export default function HomePage() {
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center'>
 				{data.items.map((manga) => (
 					<div key={manga.id} className='w-72 relative'>
-						<img src={manga.imageUrl} alt={manga.title} />
+						<img src={manga.coverImage} alt={manga.title} />
 						<div className='p-2 absolute bottom-0 left-0 right-0 h-32 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/60 to-transparent'>
 							<h2 className='font-bold'>{manga.title}</h2>
 							<p>Capitulo {manga.chapters}</p>

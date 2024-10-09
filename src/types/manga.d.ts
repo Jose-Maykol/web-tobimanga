@@ -4,7 +4,8 @@ export interface Manga {
 	description: string
 	chapters: number
 	releaseDate: string
-	imageUrl: string
+	coverImage: string
+	bannerImage: string
 	finalized: boolean
 	rating: number
 	createdAt: string
@@ -13,11 +14,13 @@ export interface Manga {
 
 export interface ApiManga {
 	id: string
-	title: string
+	original_name: string
+	cover_image: string
+	banner_image: string
+	rating: number
 	description: string
 	chapters: number
 	release_date: string
-	image_url: string
 	finalized: boolean
 	rating: number
 	created_at: string

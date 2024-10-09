@@ -13,9 +13,9 @@ class MangaAdapter {
 		return {
 			items: mangas.map((manga: Partial<ApiManga>) => ({
 				id: manga.id,
-				title: manga.title,
+				title: manga.original_name,
 				chapters: manga.chapters,
-				imageUrl: manga.image_url,
+				coverImage: manga.cover_image,
 				rating: manga.rating
 			})),
 			pagination: {

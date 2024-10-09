@@ -39,7 +39,7 @@ export const columns: ColumnDef<Partial<Manga>>[] = [
 			return (
 				<div className='capitalize flex items-center space-x-4'>
 					<img
-						src={row.original.imageUrl}
+						src={row.original.coverImage}
 						alt={row.getValue('title')}
 						className='w-10 h-10 rounded-lg object-cover'
 					/>
