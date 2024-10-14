@@ -1,30 +1,49 @@
 export interface Manga {
 	id: string
+	slug?: string
 	title: string
-	description: string
 	chapters: number
-	releaseDate: string
 	coverImage: string
-	bannerImage: string
-	finalized: boolean
 	rating: number
-	createdAt: string
-	updatedAt: string
+}
+
+export interface MangaDetail extends Manga {
+	releaseDate: string
+	bannerImage: string
+	sinopsis: string
+	authors: string[]
+	genres: string[]
+	demographic: string
+	publicationStatus: string
+	sinopsis: string
+}
+
+export interface ApiMangas {
+	id: string
+	original_name: string
+	cover_image: string
+	rating: number
+	chapters: number
+}
+
+export interface ApiMangaDetail extends ApiManga {
+	authors: string[]
+	genres: string[]
+	demographic: {
+		name: string
+	}
+	publication_status: string
+	banner_image: string
+	sinopsis: string
+	release_date: string
 }
 
 export interface ApiManga {
 	id: string
+	rating: number
 	original_name: string
 	cover_image: string
-	banner_image: string
-	rating: number
-	description: string
 	chapters: number
-	release_date: string
-	finalized: boolean
-	rating: number
-	created_at: string
-	updated_at: string
 }
 
 export interface CreateManga {

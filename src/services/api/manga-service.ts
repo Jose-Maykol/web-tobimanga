@@ -1,5 +1,5 @@
 import { mangaAdapter } from '@/adapters/manga-adapter'
-import { CreateManga, Manga } from '@/types/manga'
+import { CreateManga, Manga, MangaDetail } from '@/types/manga'
 import { Paginated } from '@/types/pagination'
 
 class MangaService {
@@ -10,6 +10,11 @@ class MangaService {
 
 	async createManga(manga: CreateManga): Promise<{ message: string; manga: Partial<Manga> }> {
 		const response = await mangaAdapter.createManga(manga)
+		return response
+	}
+
+	async getMangaBySlug(slug: string): Promise<MangaDetail> {
+		const response = await mangaAdapter.getMangaBySlug(slug)
 		return response
 	}
 }

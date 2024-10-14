@@ -3,6 +3,7 @@
 import { mangaService } from '@/services/api/manga-service'
 import { useQuery } from '@tanstack/react-query'
 import Loader from '../_components/loader/loader'
+import Link from 'next/link'
 
 export default function HomePage() {
 	const { isPending, isError, data } = useQuery({
@@ -28,10 +29,15 @@ export default function HomePage() {
 	}
 
 	return (
-		<section className='flex flex-col w-full items-center'>
+		<section className='flex flex-col w-full items-center p-4 mt-16'>
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center'>
 				{data.items.map((manga) => (
-					<div key={manga.id} className='w-72 relative'>
+					<Link
+						key={manga.id}
+						className='w-72 relative'
+						href='/manga/[slug]'
+						as={`/manga/${manga.slug}`}
+					>
 						<img src={manga.coverImage} alt={manga.title} />
 						<div className='p-2 absolute bottom-0 left-0 right-0 h-32 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/60 to-transparent'>
 							<h2 className='font-bold'>{manga.title}</h2>
@@ -40,7 +46,7 @@ export default function HomePage() {
 						<div className='absolute top-2 left-2 bg-primary text-white font-bold rounded-md w-10 h-10 flex items-center justify-center'>
 							{manga.rating}
 						</div>
-					</div>
+					</Link>
 				))}
 			</div>
 		</section>
