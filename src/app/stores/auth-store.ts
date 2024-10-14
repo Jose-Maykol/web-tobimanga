@@ -1,16 +1,20 @@
 import { authService } from '@/services/api/auth-service'
-import { ApiAuth } from '@/types/auth'
+import { ApiAuth, User } from '@/types/auth'
 import { create } from 'zustand'
 
 interface AuthStore {
 	isAuthenticated: boolean
+	user: Partial<User> | null
 	login: (email: string, password: string) => Promise<ApiAuth | undefined>
 	logout: () => void
+	checkAuth: () => Promise<void>
+	getUser: () => Partial<User> | null
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
 	isAuthenticated: false,
 	message: null,
+	user: null,
 
 	login: async (email, password) => {
 		try {
@@ -29,5 +33,20 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
 	logout: () => {
 		console.log('Logout')
+	},
+
+	checkAuth: async () => {
+		const token = await authService.checkAuth()
+		const user = await authService.getUser()
+		if (token) {
+			set({
+				isAuthenticated: true,
+				user
+			})
+		}
+	},
+
+	getUser: () => {
+		return authService.getUser()
 	}
 }))
