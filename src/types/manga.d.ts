@@ -8,42 +8,49 @@ export interface Manga {
 }
 
 export interface MangaDetail extends Manga {
+	authors: string[]
+	genres: string[]
+	demographic: {
+		name: string
+	}
+	publicationStatus: string
 	releaseDate: string
 	bannerImage: string
 	sinopsis: string
-	authors: string[]
-	genres: string[]
-	demographic: string
-	publicationStatus: string
-	sinopsis: string
 }
 
-export interface ApiMangas {
-	id: string
-	original_name: string
-	cover_image: string
-	rating: number
-	chapters: number
-}
-
-export interface ApiMangaDetail extends ApiManga {
+export interface ApiMangaDetail extends ApiMangaItem {
 	authors: string[]
 	genres: string[]
 	demographic: {
 		name: string
 	}
 	publication_status: string
+	release_date: string
 	banner_image: string
 	sinopsis: string
-	release_date: string
 }
 
-export interface ApiManga {
+export interface ApiMangaItem {
 	id: string
-	rating: number
 	original_name: string
+	rating: number
 	cover_image: string
 	chapters: number
+}
+
+export interface ApiCreateManga {
+	message: string
+	manga: {
+		id: string
+	}
+}
+
+export interface ResponseCreateManga {
+	message: string
+	manga: {
+		id: string
+	}
 }
 
 export interface CreateManga {

@@ -1,18 +1,24 @@
 import api from '@/interceptors/api-interceptor'
-import { ApiMangaDetail, ApiMangas, CreateManga, Manga, MangaDetail } from '@/types/manga'
-import { Paginated } from '@/types/pagination'
+import {
+	ApiCreateManga,
+	ApiMangaDetail,
+	ApiMangaItem,
+	CreateManga,
+	Manga,
+	MangaDetail,
+	ResponseCreateManga
+} from '@/types/manga'
+import { ApiPagination, Paginated } from '@/types/pagination'
 import { generateSlug } from '@/utils/generate-slug'
 
-class MangaAdapter {
-	public async getByPage(
-		{ page, limit } = { page: 1, limit: 10 }
-	): Promise<Paginated<Partial<Manga>>> {
-		const response = await api.get(`/mangas`, {
-			params: { page, limit }
-		})
-		const { mangas, pagination } = response.data
+export class MangaAdapter {
+	public static async getByPage(response: {
+		mangas: ApiMangaItem[]
+		pagination: ApiPagination
+	}): Promise<Paginated<Partial<Manga>>> {
+		const { mangas, pagination } = response
 		return {
-			items: mangas.map((manga: ApiMangas) => ({
+			items: mangas.map((manga: ApiMangaItem) => ({
 				id: manga.id,
 				slug: generateSlug(manga.original_name),
 				title: manga.original_name,
@@ -22,29 +28,26 @@ class MangaAdapter {
 			})),
 			pagination: {
 				total: pagination.total,
-				itemsPerPage: pagination.itemsPerPage,
-				currentPage: pagination.currentPage,
+				itemsPerPage: pagination.items_per_page,
+				currentPage: pagination.current_page,
 				pages: pagination.pages,
-				hasNextPage: pagination.hasNextPage,
-				hasPreviousPage: pagination.hasPreviousPage
+				hasNextPage: pagination.has_next_page,
+				hasPreviousPage: pagination.has_previous_page
 			}
 		}
 	}
 
-	public async createManga(
-		manga: CreateManga
-	): Promise<{ message: string; manga: Partial<Manga> }> {
-		const response = await api.post(`/mangas`, manga)
-
+	public static async createManga(response: ApiCreateManga): Promise<ResponseCreateManga> {
 		return {
-			message: response.data.message,
-			manga: response.data.manga
+			message: response.message,
+			manga: {
+				id: response.manga.id
+			}
 		}
 	}
 
-	public async getMangaBySlug(slug: string): Promise<MangaDetail> {
-		const response = await api.get(`/mangas/${slug}`)
-		const manga: ApiMangaDetail = response.data
+	public static async getMangaBySlug(response: any): Promise<MangaDetail> {
+		const manga: ApiMangaDetail = response
 		return {
 			id: manga.id,
 			title: manga.original_name,
@@ -56,10 +59,10 @@ class MangaAdapter {
 			publicationStatus: manga.publication_status,
 			rating: manga.rating,
 			authors: manga.authors,
-			demographic: manga.demographic.name,
+			demographic: {
+				name: manga.demographic.name
+			},
 			genres: manga.genres
 		}
 	}
 }
-
-export const mangaAdapter = new MangaAdapter()
