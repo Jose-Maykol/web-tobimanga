@@ -15,7 +15,7 @@ export class MangaAdapter {
 	public static async getByPage(response: {
 		mangas: ApiMangaItem[]
 		pagination: ApiPagination
-	}): Promise<Paginated<Partial<Manga>>> {
+	}): Promise<Paginated<Manga>> {
 		const { mangas, pagination } = response
 		return {
 			items: mangas.map((manga: ApiMangaItem) => ({

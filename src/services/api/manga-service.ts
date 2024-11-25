@@ -4,7 +4,7 @@ import { CreateManga, Manga, MangaDetail, ResponseCreateManga } from '@/types/ma
 import { Paginated } from '@/types/pagination'
 
 class MangaService {
-	async getByPage({ page, limit } = { page: 1, limit: 10 }): Promise<Paginated<Partial<Manga>>> {
+	async getByPage({ page, limit } = { page: 1, limit: 10 }): Promise<Paginated<Manga>> {
 		const response = await api.get('/mangas', {
 			params: { page, limit }
 		})
