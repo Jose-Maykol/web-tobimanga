@@ -71,3 +71,30 @@ export interface CreateManga {
 		data: string
 	}
 }
+
+export interface CreateMangaPayload {
+	manga: {
+		original_name: string
+		sinopsis: string
+		chapters: number
+		release_date: Date
+		publication_status: string
+		banner_image: {
+			contentType: string
+			data: string
+		}
+		cover_image: {
+			contentType: string
+			data: string
+		}
+	}
+	genres: {
+		id: string
+	}[]
+	authors: {
+		id: string
+	}[]
+	demographic: {
+		id: string
+	}
+}

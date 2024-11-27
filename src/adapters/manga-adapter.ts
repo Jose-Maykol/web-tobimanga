@@ -4,6 +4,7 @@ import {
 	ApiMangaDetail,
 	ApiMangaItem,
 	CreateManga,
+	CreateMangaPayload,
 	Manga,
 	MangaDetail,
 	ResponseCreateManga
@@ -37,7 +38,30 @@ export class MangaAdapter {
 		}
 	}
 
-	public static async createManga(response: ApiCreateManga): Promise<ResponseCreateManga> {
+	public static createMangaPayload(manga: CreateManga): CreateMangaPayload {
+		return {
+			manga: {
+				original_name: manga.originalName,
+				sinopsis: manga.sinopsis,
+				release_date: manga.releaseDate,
+				publication_status: manga.publicationStatus,
+				chapters: manga.chapters,
+				banner_image: manga.bannerImage,
+				cover_image: manga.coverImage
+			},
+			demographic: {
+				id: manga.demographic
+			},
+			genres: manga.genres.map((genre) => ({
+				id: genre
+			})),
+			authors: manga.authors.map((author) => ({
+				id: author
+			}))
+		}
+	}
+
+	public static createMangaResponse(response: ApiCreateManga): ResponseCreateManga {
 		return {
 			message: response.message,
 			manga: {

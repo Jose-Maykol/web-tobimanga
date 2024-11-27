@@ -12,28 +12,9 @@ class MangaService {
 	}
 
 	async createManga(manga: CreateManga): Promise<ResponseCreateManga> {
-		const createManga = {
-			manga: {
-				original_name: manga.originalName,
-				sinopsis: manga.sinopsis,
-				release_date: manga.releaseDate,
-				publication_status: manga.publicationStatus,
-				chapters: manga.chapters,
-				bannerImage: manga.bannerImage,
-				coverImage: manga.coverImage
-			},
-			demographic: {
-				id: manga.demographic
-			},
-			genres: manga.genres.map((genre) => ({
-				id: genre
-			})),
-			authors: manga.authors.map((author) => ({
-				id: author
-			}))
-		}
+		const createManga = MangaAdapter.createMangaPayload(manga)
 		const response = await api.post(`/mangas`, createManga)
-		return MangaAdapter.createManga(response.data)
+		return MangaAdapter.createMangaResponse(response.data)
 	}
 
 	async getMangaBySlug(slug: string): Promise<MangaDetail> {
