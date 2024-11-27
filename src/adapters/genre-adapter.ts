@@ -3,7 +3,7 @@ import { ApiGenre } from '@/types/genre'
 
 class GenreAdapter {
 	async getAllGenres(): Promise<{ genres: { value: string; label: string }[] }> {
-		const response = await apiAuth.get(`/genres`)
+		const response = await apiAuth.get(`mangas/genres`)
 		const { genres } = response.data
 		return {
 			genres: genres.map((genre: Partial<ApiGenre>) => ({

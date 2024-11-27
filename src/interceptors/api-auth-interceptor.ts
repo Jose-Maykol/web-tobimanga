@@ -3,7 +3,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 
 const apiAuth = axios.create({
-	baseURL: `${API_URL}/api`,
+	baseURL: `${API_URL}/api/v1`,
 	timeout: 5000
 })
 

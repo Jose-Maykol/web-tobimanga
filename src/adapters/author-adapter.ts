@@ -3,7 +3,7 @@ import { ApiAuthor, CreateAuthor } from '@/types/author'
 
 class AuthorAdapter {
 	public async getAllAuthors(): Promise<{ authors: { value: string; label: string }[] }> {
-		const response = await apiAuth.get(`/authors`)
+		const response = await apiAuth.get(`mangas/authors`)
 		const { authors } = response.data
 		return {
 			authors: authors.map((author: Partial<ApiAuthor>) => ({

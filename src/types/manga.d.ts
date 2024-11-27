@@ -54,7 +54,14 @@ export interface ResponseCreateManga {
 }
 
 export interface CreateManga {
+	originalName: string
+	sinopsis: string
+	chapters: number
+	releaseDate: Date
+	publicationStatus: string
+	genres: string[]
 	authors: string[]
+	demographic: string
 	bannerImage: {
 		contentType: string
 		data: string
@@ -63,10 +70,4 @@ export interface CreateManga {
 		contentType: string
 		data: string
 	}
-	demographic: string
-	genres: string[]
-	publicationStatus: string
-	releaseDate: Date
-	sinopsis: string
-	originalName: string
 }

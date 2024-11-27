@@ -10,13 +10,11 @@ import {
 	FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { MultipleSelector } from '@/components/ui/multiple-select'
 import {
 	Select,
 	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue
 } from '@/components/ui/select'
@@ -31,6 +29,8 @@ import DemographySelect from './demography-select'
 import { mangaService } from '@/services/api/manga-service'
 import { toast } from 'sonner'
 import ReleaseDateInput from './release-date-input'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export const formSchema = z.object({
 	originalName: z.string(),
@@ -65,17 +65,23 @@ export default function RegisterMangaForm() {
 		}
 	})
 
+	const router = useRouter()
+	const [isSubmitting, setIsSubmitting] = useState(false)
+
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
-		console.log(values)
+		setIsSubmitting(true)
 		try {
 			const response = await mangaService.createManga(values)
 			if (response) {
 				toast.success(response.message)
+				router.push(`/mangas`)
 			}
 		} catch (error) {
 			//TODO: Manejar errores
 			console.error(error)
 			toast.error('Ocurrió un error al registrar el manga')
+		} finally {
+			setIsSubmitting(false)
 		}
 	}
 
@@ -206,8 +212,8 @@ export default function RegisterMangaForm() {
 						<GenreSelect control={form.control} />
 					</div>
 				</div>
-				<Button type='submit' className='w-full'>
-					Registrar manga
+				<Button type='submit' className='w-full' disabled={isSubmitting}>
+					{isSubmitting ? 'Guardando...' : 'Registrar manga'}
 				</Button>
 			</form>
 		</Form>
