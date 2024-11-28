@@ -82,11 +82,18 @@ export class MangaAdapter {
 			bannerImage: manga.banner_image,
 			publicationStatus: manga.publication_status,
 			rating: manga.rating,
-			authors: manga.authors,
+			authors: manga.authors.map((author) => ({
+				id: author.id,
+				name: author.name
+			})),
 			demographic: {
+				id: manga.demographic.id,
 				name: manga.demographic.name
 			},
-			genres: manga.genres
+			genres: manga.genres.map((genre) => ({
+				id: genre.id,
+				name: genre.name
+			}))
 		}
 	}
 }

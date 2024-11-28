@@ -1,6 +1,7 @@
 'use client'
 
 import Loader from '@/app/_components/loader/loader'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { mangaService } from '@/services/api/manga-service'
 import { useQuery } from '@tanstack/react-query'
@@ -91,9 +92,18 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 							)}
 						</Button>
 					</div>
-					<div className='py-4 space-y-2'>
-						<h1 className='text-3xl font-semibold'>{data.title}</h1>
-						<p className='text-muted-foreground text-sm'>{data.sinopsis}</p>
+					<div className='p-4 space-y-2'>
+						<div>
+							<h1 className='text-3xl font-semibold'>{data.title}</h1>
+							<p className='text-muted-foreground text-sm my-4'>{data.sinopsis}</p>
+						</div>
+						<div className=' flex flex-row gap-2'>
+							{data.genres.map((genre) => (
+								<Badge key={genre.id}>
+									<p className='text-white'>{genre.name}</p>
+								</Badge>
+							))}
+						</div>
 					</div>
 				</div>
 			</div>

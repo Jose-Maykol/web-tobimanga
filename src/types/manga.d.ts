@@ -8,9 +8,16 @@ export interface Manga {
 }
 
 export interface MangaDetail extends Manga {
-	authors: string[]
-	genres: string[]
+	authors: {
+		id: string
+		name: string
+	}[]
+	genres: {
+		id: string
+		name: string
+	}[]
 	demographic: {
+		id: string
 		name: string
 	}
 	publicationStatus: string
@@ -20,9 +27,16 @@ export interface MangaDetail extends Manga {
 }
 
 export interface ApiMangaDetail extends ApiMangaItem {
-	authors: string[]
-	genres: string[]
+	authors: {
+		id: string
+		name: string
+	}[]
+	genres: {
+		id: string
+		name: string
+	}[]
 	demographic: {
+		id: string
 		name: string
 	}
 	publication_status: string
