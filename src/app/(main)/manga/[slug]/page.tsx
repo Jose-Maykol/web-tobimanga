@@ -3,6 +3,7 @@
 import Loader from '@/app/_components/loader/loader'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { mangaService } from '@/services/api/manga-service'
 import { useQuery } from '@tanstack/react-query'
 import { BookOpen, Check, Heart, Loader2 } from 'lucide-react'
@@ -52,7 +53,7 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 			</div>
 			<div className='w-full flex flex-col items-center'>
 				<div className='flex flex-row gap-4 max-w-5xl'>
-					<div className='relative top-[-150px] w-[200px] min-w-[200px] space-y-2 flex flex-col'>
+					<div className='relative top-[-150px] w-[200px] min-w-[200px] flex flex-col gap-2'>
 						<img
 							src={data.coverImage}
 							alt={data.title}
@@ -91,6 +92,22 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 								</>
 							)}
 						</Button>
+						<Card className='py-2 mt-4'>
+							<CardContent className='px-4 space-y-2'>
+								{/* Se debe agregar los nombres alternativos si existen */}
+								<h3 className='text-sm text-muted-foreground'>Demografía</h3>
+								<Badge className='bg-green-600 text-white'>
+									<p>{data.demographic.name}</p>
+								</Badge>
+								<h3 className='text-sm text-muted-foreground'>Capítulos</h3>
+								<p className='text-sm font-bold'>{data.chapters}</p>
+								<h3 className='text-sm text-muted-foreground'>Estado de publicación</h3>
+								<Badge>
+									<p>{data.publicationStatus}</p>
+								</Badge>
+								{/* Podria ponerse la ultima fecha de actualizacion del manga */}
+							</CardContent>
+						</Card>
 					</div>
 					<div className='p-4 space-y-2'>
 						<div>
