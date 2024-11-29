@@ -48,12 +48,16 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 
 	return (
 		<section>
-			<div>
-				<img src={data.bannerImage} alt={data.title} className='w-full aspect-[14/5]' />
+			<div className='min-h-64'>
+				<img
+					src={data.bannerImage}
+					alt={data.title}
+					className='min-h-64 w-full aspect-[14/5] object-cover'
+				/>
 			</div>
 			<div className='w-full flex flex-col items-center'>
-				<div className='flex flex-row gap-4 max-w-5xl'>
-					<div className='relative top-[-150px] w-[200px] min-w-[200px] flex flex-col gap-2'>
+				<div className='relative flex flex-col gap-4 max-w-5xl items-center sm:flex-row sm:items-start mx-4'>
+					<div className='relative top-[-150px] w-[200px] min-w-[200px] flex flex-col gap-2 mb-[-150px]'>
 						<img
 							src={data.coverImage}
 							alt={data.title}
