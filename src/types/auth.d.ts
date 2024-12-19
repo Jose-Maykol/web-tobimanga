@@ -1,5 +1,11 @@
 export interface ApiAuth {
 	message: string
+	user: Partial<ApiUser>
+	access_token: string
+}
+
+export interface Auth {
+	message: string
 	user: Partial<User>
 	accessToken: string
 }

@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -17,7 +19,6 @@ import { z } from 'zod'
 import { loginFormSchema } from '../_schemas/login-form-schema'
 import { useAuthStore } from '@/app/stores/auth-store'
 import { toast } from 'sonner'
-import { ApiError } from 'next/dist/server/api-utils'
 import { isApiError } from '@/utils/is-api-error'
 
 export default function LoginForm() {
@@ -25,7 +26,6 @@ export default function LoginForm() {
 	const router = useRouter()
 
 	const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
-		console.log(values)
 		try {
 			const response = await login(values.email, values.password)
 			if (response) {
