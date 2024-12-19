@@ -12,10 +12,16 @@ import { useAuthStore } from '@/app/stores/auth-store'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { LogOut, Settings, User } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function UserNavMenu() {
-	const { isAuthenticated, getUser } = useAuthStore()
+	const { isAuthenticated, getUser, logout } = useAuthStore()
 	const { username, profileImage, email } = getUser() || {}
+
+	const handleLogout = () => {
+		logout()
+		toast.success('Sesión cerrada')
+	}
 
 	return (
 		<>
@@ -59,7 +65,7 @@ export default function UserNavMenu() {
 								<p>Configuración</p>
 							</div>
 						</DropdownMenuItem>
-						<DropdownMenuItem>
+						<DropdownMenuItem onClick={handleLogout}>
 							<div className='flex flex-row gap-2 items-center'>
 								<LogOut className='size-4' />
 								<p>Cerrar sesión</p>
