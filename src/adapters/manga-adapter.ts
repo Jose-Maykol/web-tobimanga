@@ -1,4 +1,5 @@
 import api from '@/interceptors/api-interceptor'
+import { ApiChapterItem, Chapter } from '@/types/chapter'
 import {
 	ApiCreateManga,
 	ApiMangaDetail,
@@ -94,6 +95,27 @@ export class MangaAdapter {
 				id: genre.id,
 				name: genre.name
 			}))
+		}
+	}
+
+	public static async getMangaChapters(response: {
+		chapters: ApiChapterItem[]
+		pagination: ApiPagination
+	}): Promise<Paginated<Chapter>> {
+		const { chapters, pagination } = response
+		return {
+			items: chapters.map((chapter: ApiChapterItem) => ({
+				id: chapter.id,
+				number: chapter.chapter_number
+			})),
+			pagination: {
+				total: pagination.total,
+				itemsPerPage: pagination.items_per_page,
+				currentPage: pagination.current_page,
+				pages: pagination.pages,
+				hasNextPage: pagination.has_next_page,
+				hasPreviousPage: pagination.has_previous_page
+			}
 		}
 	}
 }

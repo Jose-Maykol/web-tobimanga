@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query'
 import { BookOpen, Check, Heart, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import ChapterCard from './_components/chapter-card'
+import ChaptersList from './_components/chapters-list'
 
 interface MangaDetailPageProps {
 	params: {
@@ -130,9 +131,7 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 							<div className='mb-4'>
 								<h2 className='text-xl font-bold'>Capitulos</h2>
 							</div>
-							<div>
-								<ChapterCard />
-							</div>
+							<ChaptersList mangaSlug={params.slug} />
 						</section>
 					</div>
 				</div>
