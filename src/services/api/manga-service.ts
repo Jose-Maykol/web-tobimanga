@@ -1,4 +1,5 @@
 import { MangaAdapter } from '@/adapters/manga-adapter'
+import Cookies from 'js-cookie'
 import api from '@/interceptors/api-interceptor'
 import { Chapter } from '@/types/chapter'
 import { CreateManga, Manga, MangaDetail, ResponseCreateManga } from '@/types/manga'
@@ -13,8 +14,11 @@ class MangaService {
 	}
 
 	async createManga(manga: CreateManga): Promise<ResponseCreateManga> {
+		const authToken = Cookies.get('access_token')
 		const createManga = MangaAdapter.createMangaPayload(manga)
-		const response = await api.post(`/mangas`, createManga)
+		const response = await api.post(`/mangas`, createManga, {
+			headers: { Authorization: `Bearer ${authToken}` }
+		})
 		return MangaAdapter.createMangaResponse(response.data)
 	}
 
