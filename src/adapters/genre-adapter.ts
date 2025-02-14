@@ -14,7 +14,7 @@ class GenreAdapter {
 	}
 
 	async createGenre(genre: { name: string }) {
-		const response = await apiAuth.post(`/genres`, genre)
+		const response = await apiAuth.post(`mangas/genres`, genre)
 
 		return {
 			message: response.data.message,

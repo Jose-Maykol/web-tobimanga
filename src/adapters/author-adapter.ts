@@ -14,7 +14,7 @@ class AuthorAdapter {
 	}
 
 	public async createAuthor(author: CreateAuthor) {
-		const response = await apiAuth.post(`/authors`, author)
+		const response = await apiAuth.post(`mangas/authors`, author)
 
 		return {
 			message: response.data.message,
