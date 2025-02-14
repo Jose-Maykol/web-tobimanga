@@ -30,7 +30,7 @@ export default function GenreSelect({ control }: GenreSelectProps) {
 	}
 
 	return (
-		<div className='flex flex-row gap-4 items-end'>
+		<div className='flex flex-row gap-4 items-start'>
 			<FormField
 				control={control}
 				name='genres'

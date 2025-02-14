@@ -47,7 +47,7 @@ export default function AddAuthorDialog() {
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger className='p-2' asChild>
-				<Button>
+				<Button className='self-center'>
 					<Plus />
 				</Button>
 			</DialogTrigger>

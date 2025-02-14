@@ -19,7 +19,7 @@ export default function ReleaseDateInput({ control }: ReleaseDateInputProps) {
 			control={control}
 			name='releaseDate'
 			render={({ field }) => (
-				<FormItem className='flex flex-col'>
+				<FormItem className='flex flex-col justify-end'>
 					<FormLabel>Año de lanzamiento</FormLabel>
 					<FormControl>
 						{/* <Input placeholder='Año de lanzamiento' type='number' {...field} /> */}
