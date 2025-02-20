@@ -1,14 +1,36 @@
 {
+	"env": {
+    "browser": true,
+    "es2021": true
+  },
   "extends": [
-    "eslint:recommended",
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "standard"
+    "eslint-config-prettier",
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "standard",
+    "prettier"
   ],
-  "plugins": ["@typescript-eslint", "prettier"],
   "parser": "@typescript-eslint/parser",
   "rules": {
-    "quotes": ["error", "single"]
-  }
+		"space-before-function-paren": "off",
+		"no-unused-vars": "warn",
+		"@typescript-eslint/no-explicit-any": "warn",
+		"@typescript-eslint/no-unused-vars": [
+			"warn",
+			{
+				"argsIgnorePattern": "^_",
+				"varsIgnorePattern": "^_",
+				"caughtErrorsIgnorePattern": "^_"
+			}
+		],
+		"no-multiple-empty-lines": "off",
+		"no-tabs": "off",
+		"indent": ["warn", "tab"],
+		"quotes": ["warn", "single"],
+		"jsx-quotes": ["warn", "prefer-single"],
+		"eol-last": "off"
+	}
 }
