@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export interface Manga {
 	id: string
 	slug?: string
@@ -26,6 +27,14 @@ export interface MangaDetail extends Manga {
 	sinopsis: string
 }
 
+export interface ApiMangaItem {
+	id: string
+	original_name: string
+	rating: number
+	cover_image: string
+	chapters: number
+}
+
 export interface ApiMangaDetail extends ApiMangaItem {
 	authors: {
 		id: string
@@ -43,14 +52,6 @@ export interface ApiMangaDetail extends ApiMangaItem {
 	release_date: string
 	banner_image: string
 	sinopsis: string
-}
-
-export interface ApiMangaItem {
-	id: string
-	original_name: string
-	rating: number
-	cover_image: string
-	chapters: number
 }
 
 export interface ApiCreateManga {

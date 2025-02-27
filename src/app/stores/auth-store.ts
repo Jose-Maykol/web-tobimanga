@@ -32,15 +32,11 @@ export const useAuthStore = create<AuthStore>((set) => ({
 	},
 
 	logout: () => {
-		try {
-			authService.logout()
-			set({
-				isAuthenticated: false,
-				user: null
-			})
-		} catch (error) {
-			throw error
-		}
+		authService.logout()
+		set({
+			isAuthenticated: false,
+			user: null
+		})
 	},
 
 	checkAuth: async () => {

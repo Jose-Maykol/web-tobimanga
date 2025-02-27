@@ -1,12 +1,13 @@
 'use client'
 
+import { ReactNode } from 'react'
 import Navbar from './_components/navbar'
 import withAuth from './_components/with-auth'
 
 function MainLayout({
 	children
 }: Readonly<{
-	children: React.ReactNode
+	children: ReactNode
 }>) {
 	return (
 		<main className='flex min-h-screen w-full flex-col'>

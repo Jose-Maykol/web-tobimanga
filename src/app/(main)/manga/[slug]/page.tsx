@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Loader from '@/app/_components/loader/loader'
@@ -10,6 +11,7 @@ import { BookOpen, Check, Heart, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import ChapterCard from './_components/chapter-card'
 import ChaptersList from './_components/chapters-list'
+import StartFollowingReadingButton from './_components/start-following-reading-button'
 
 interface MangaDetailPageProps {
 	params: {
@@ -24,14 +26,6 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 			return await mangaService.getMangaBySlug(params.slug)
 		}
 	})
-
-	const [isFollowing, setIsFollowing] = useState(false)
-	const [isHovered, setIsHovered] = useState(false)
-	const [isLoading, setIsLoading] = useState(false)
-
-	const handleFollow = () => {
-		setIsFollowing(true)
-	}
 
 	if (isPending) {
 		return (
@@ -67,37 +61,7 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 							height={300}
 							className='aspect-[2/3] w-full'
 						/>
-						<Button
-							onClick={handleFollow}
-							onMouseEnter={() => setIsHovered(true)}
-							onMouseLeave={() => setIsHovered(false)}
-							disabled={isLoading}
-							className={`w-full font-bold py-2 px-4 rounded transition-all duration-200 ${
-								isFollowing
-									? isHovered
-										? 'bg-red-500 hover:bg-red-600 text-white'
-										: 'bg-neutral-200 text-gray-800 hover:bg-neutral-300'
-									: 'bg-primary text-white'
-							}`}
-						>
-							{isLoading ? (
-								<Loader2 className='mr-2 h-4 w-4 animate-spin' />
-							) : isFollowing ? (
-								isHovered ? (
-									'Dejar de seguir'
-								) : (
-									<>
-										<Check className='mr-2 h-4 w-4' />
-										Siguiendo
-									</>
-								)
-							) : (
-								<>
-									<BookOpen className='mr-2 h-4 w-4' />
-									Seguir manga
-								</>
-							)}
-						</Button>
+						<StartFollowingReadingButton />
 						<Card className='py-2 mt-4'>
 							<CardContent className='px-4 space-y-2'>
 								{/* Se debe agregar los nombres alternativos si existen */}
@@ -108,7 +72,7 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 								<h3 className='text-sm text-muted-foreground'>Capítulos</h3>
 								<p className='text-sm font-bold'>{data.chapters}</p>
 								<h3 className='text-sm text-muted-foreground'>Estado de publicación</h3>
-								<Badge>
+								<Badge className='text-white'>
 									<p>{data.publicationStatus}</p>
 								</Badge>
 								{/* Podria ponerse la ultima fecha de actualizacion del manga */}

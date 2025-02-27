@@ -10,10 +10,9 @@ import {
 	FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { loginFormSchema } from '../_schemas/login-form-schema'
@@ -24,13 +23,15 @@ import { isApiError } from '@/utils/is-api-error'
 export default function LoginForm() {
 	const { login } = useAuthStore()
 	const router = useRouter()
+	const searchParams = useSearchParams()
+	const redirectTo = searchParams.get('redirect')
 
 	const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
 		try {
 			const response = await login(values.email, values.password)
 			if (response) {
 				toast.success(response.message)
-				router.push('/')
+				router.push(redirectTo || '/')
 			}
 		} catch (error: unknown) {
 			if (isApiError(error)) {
