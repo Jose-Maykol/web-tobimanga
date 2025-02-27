@@ -1,24 +1,19 @@
-import { useAuthStore } from '@/app/stores/auth-store'
-import { ComponentType, useCallback, useEffect, useState } from 'react'
+import { useAuthenticate } from '@/hooks/use-authenticate'
+import { ComponentType, JSX } from 'react'
 
-const withAuth = (Component: ComponentType<any>) => {
-	return (props: any) => {
-		const { checkAuth } = useAuthStore()
-		const [loading, setLoading] = useState(true)
-
-		const isAuthenticated = useCallback(async () => {
-			await checkAuth()
-			setLoading(false)
-		}, [checkAuth])
-
-		useEffect(() => {
-			isAuthenticated()
-		}, [isAuthenticated])
+const withAuth = <P extends object>(Component: ComponentType<P>) => {
+	const AuthenticatedComponent = (props: JSX.IntrinsicAttributes & P) => {
+		const { loading, error } = useAuthenticate()
 
 		if (loading) return null
+		if (error) return <div>Error: {error.message}</div>
 
 		return <Component {...props} />
 	}
+
+	AuthenticatedComponent.displayName = `withAuth(${Component.displayName || Component.name || 'Component'})`
+
+	return AuthenticatedComponent
 }
 
 export default withAuth
