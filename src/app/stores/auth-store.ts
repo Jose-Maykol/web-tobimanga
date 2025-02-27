@@ -1,4 +1,4 @@
-import { authService } from '@/services/api/auth-service'
+import AuthService from '@/services/api/auth-service'
 import { Auth, User } from '@/types/auth'
 import { create } from 'zustand'
 
@@ -18,7 +18,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
 	login: async (email, password) => {
 		try {
-			const response = await authService.login(email, password)
+			const response = await AuthService.login(email, password)
 			set({
 				isAuthenticated: true
 			})
@@ -32,7 +32,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
 	},
 
 	logout: () => {
-		authService.logout()
+		AuthService.logout()
 		set({
 			isAuthenticated: false,
 			user: null
@@ -40,8 +40,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
 	},
 
 	checkAuth: async () => {
-		const token = await authService.checkAuth()
-		const user = await authService.getUser()
+		const token = await AuthService.checkAuth()
+		const user = await AuthService.getUser()
 		if (token) {
 			set({
 				isAuthenticated: true,
@@ -51,6 +51,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
 	},
 
 	getUser: () => {
-		return authService.getUser()
+		return AuthService.getUser()
 	}
 }))
