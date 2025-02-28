@@ -1,15 +1,8 @@
 import { useAuthStore } from '@/app/stores/auth-store'
 import { Button } from '@/components/ui/button'
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue
-} from '@/components/ui/select'
+import { Select, SelectContent, SelectGroup, SelectTrigger } from '@/components/ui/select'
 import { ReadingStatus } from '@/enums/reading-status.enum'
+import UserMangaService from '@/services/api/user-manga'
 import { BookOpen } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -29,20 +22,34 @@ const allowedStatuses: ReadingStatus[] = [
 	ReadingStatus.PAUSED
 ]
 
-export default function StartFollowingReadingButton() {
+type StartFollowingReadingButtonProps = {
+	manga: {
+		id: string
+		/* 		status: ReadingStatus */
+	}
+}
+
+export default function StartFollowingReadingButton({ manga }: StartFollowingReadingButtonProps) {
 	const { isAuthenticated } = useAuthStore()
 	const [isFollowing, setIsFollowing] = useState(false)
 	const [isOpen, setIsOpen] = useState(false)
 	const [selectedStatus, setSelectedStatus] = useState<ReadingStatus>(ReadingStatus.READING)
 	const router = useRouter()
 
-	const handleFollow = () => {
+	const handleStartReading = async () => {
 		if (!isAuthenticated) {
 			router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`)
 			return
 		}
-		setIsFollowing(true)
-		toast.success('¡Ahora sigues este manga!')
+
+		try {
+			await UserMangaService.setStatusReading(manga.id)
+			toast.success('¡Ahora sigues este manga!')
+			setIsFollowing(true)
+		} catch (error) {
+			console.error(error)
+			toast.error('¡Algo salió mal!')
+		}
 	}
 
 	const handleOptionSelect = (status: ReadingStatus) => {
@@ -85,7 +92,7 @@ export default function StartFollowingReadingButton() {
 
 	return (
 		<div className='flex flex-row gap-2'>
-			<Button className='w-full rounded-sm font-bold' onClick={handleFollow}>
+			<Button className='w-full rounded-sm font-bold' onClick={handleStartReading}>
 				<BookOpen className='mr-2 h-4 w-4' /> <p>Seguir lectura</p>
 			</Button>
 		</div>

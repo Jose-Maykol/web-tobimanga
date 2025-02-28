@@ -3,13 +3,9 @@
 
 import Loader from '@/app/_components/loader/loader'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { mangaService } from '@/services/api/manga-service'
+import MangaService from '@/services/api/manga-service'
 import { useQuery } from '@tanstack/react-query'
-import { BookOpen, Check, Heart, Loader2 } from 'lucide-react'
-import { useState } from 'react'
-import ChapterCard from './_components/chapter-card'
 import ChaptersList from './_components/chapters-list'
 import StartFollowingReadingButton from './_components/start-following-reading-button'
 
@@ -23,7 +19,7 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 	const { isPending, isError, data } = useQuery({
 		queryKey: ['manga', params.slug],
 		queryFn: async () => {
-			return await mangaService.getMangaBySlug(params.slug)
+			return await MangaService.getMangaBySlug(params.slug)
 		}
 	})
 
@@ -61,7 +57,12 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 							height={300}
 							className='aspect-[2/3] w-full'
 						/>
-						<StartFollowingReadingButton />
+						<StartFollowingReadingButton
+							manga={{
+								id: data.id
+								/* 								status: data.status */
+							}}
+						/>
 						<Card className='py-2 mt-4'>
 							<CardContent className='px-4 space-y-2'>
 								{/* Se debe agregar los nombres alternativos si existen */}

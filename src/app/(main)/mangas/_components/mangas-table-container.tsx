@@ -1,15 +1,15 @@
 'use client'
 
 import Loader from '@/app/_components/loader/loader'
-import { mangaService } from '@/services/api/manga-service'
 import { useQuery } from '@tanstack/react-query'
 import { MangasTable } from './mangas-table'
+import MangaService from '@/services/api/manga-service'
 
 export default function MangasTableContainer() {
 	const { isPending, isError, data } = useQuery({
 		queryKey: ['mangas'],
 		queryFn: async () => {
-			return await mangaService.getByPage({ page: 1, limit: 10 })
+			return await MangaService.getByPage({ page: 1, limit: 10 })
 		}
 	})
 

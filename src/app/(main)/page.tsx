@@ -1,18 +1,18 @@
 'use client'
 
-import { mangaService } from '@/services/api/manga-service'
 import { useQuery } from '@tanstack/react-query'
 import Loader from '../_components/loader/loader'
 import Link from 'next/link'
 /* import MangaCoverImage from '../_components/manga-cover-image' */
 import { Paginated } from '@/types/pagination'
 import { Manga } from '@/types/manga'
+import MangaService from '@/services/api/manga-service'
 
 export default function HomePage() {
 	const { isPending, isError, data } = useQuery<Paginated<Manga>>({
 		queryKey: ['mangas'],
 		queryFn: async () => {
-			return await mangaService.getByPage({ page: 1, limit: 10 })
+			return await MangaService.getByPage({ page: 1, limit: 10 })
 		}
 	})
 

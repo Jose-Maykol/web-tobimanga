@@ -26,11 +26,11 @@ import ImageInput from './image-input'
 import AuthorSelect from './author-select'
 import GenreSelect from './genre-select'
 import DemographySelect from './demography-select'
-import { mangaService } from '@/services/api/manga-service'
 import { toast } from 'sonner'
 import ReleaseDateInput from './release-date-input'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import MangaService from '@/services/api/manga-service'
 
 export const formSchema = z.object({
 	originalName: z.string(),
@@ -71,13 +71,13 @@ export default function RegisterMangaForm() {
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		setIsSubmitting(true)
 		try {
-			const response = await mangaService.createManga(values)
+			const response = await MangaService.createManga(values)
 			if (response) {
 				toast.success(response.message)
-				router.push(`/mangas`)
+				router.push('/mangas')
 			}
 		} catch (error) {
-			//TODO: Manejar errores
+			// TODO: Manejar errores
 			console.error(error)
 			toast.error('Ocurrió un error al registrar el manga')
 		} finally {
