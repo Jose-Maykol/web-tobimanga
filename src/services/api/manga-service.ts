@@ -5,27 +5,27 @@ import { Chapter } from '@/types/chapter'
 import { CreateManga, Manga, MangaDetail, ResponseCreateManga } from '@/types/manga'
 import { Paginated } from '@/types/pagination'
 
-class MangaService {
+const MangaService = {
 	async getByPage({ page, limit } = { page: 1, limit: 10 }): Promise<Paginated<Manga>> {
 		const response = await api.get('/mangas', {
 			params: { page, limit }
 		})
 		return MangaAdapter.getByPage(response.data)
-	}
+	},
 
 	async createManga(manga: CreateManga): Promise<ResponseCreateManga> {
 		const authToken = Cookies.get('access_token')
 		const createManga = MangaAdapter.createMangaPayload(manga)
-		const response = await api.post(`/mangas`, createManga, {
+		const response = await api.post('/mangas', createManga, {
 			headers: { Authorization: `Bearer ${authToken}` }
 		})
 		return MangaAdapter.createMangaResponse(response.data)
-	}
+	},
 
 	async getMangaBySlug(slug: string): Promise<MangaDetail> {
 		const response = await api.get(`/mangas/${slug}`)
 		return MangaAdapter.getMangaBySlug(response.data)
-	}
+	},
 
 	async getMangaChapters(
 		slug: string,
@@ -33,10 +33,10 @@ class MangaService {
 	): Promise<Paginated<Chapter>> {
 		const { page, limit } = pagination
 		const response = await api.get(`/mangas/${slug}/chapters`, {
-			params: { page: page, limit: limit }
+			params: { page, limit }
 		})
 		return MangaAdapter.getMangaChapters(response.data)
 	}
 }
 
-export const mangaService = new MangaService()
+export default MangaService

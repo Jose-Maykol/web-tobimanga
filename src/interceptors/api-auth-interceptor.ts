@@ -10,10 +10,8 @@ const apiAuth = axios.create({
 apiAuth.interceptors.request.use(
 	(config) => {
 		const cookieStore = Cookies
-		const token = cookieStore.get('token')
-		if (token) {
-			config.headers.Authorization = `Bearer ${token}`
-		}
+		const token = cookieStore.get('access_token')
+		if (token) config.headers.Authorization = `Bearer ${token}`
 		return config
 	},
 	(error) => {
