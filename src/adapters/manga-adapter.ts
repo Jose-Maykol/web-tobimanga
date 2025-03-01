@@ -106,7 +106,9 @@ export class MangaAdapter {
 		return {
 			items: chapters.map((chapter: ApiChapterItem) => ({
 				id: chapter.id,
-				number: chapter.chapter_number
+				number: chapter.chapter_number,
+				readAt: chapter.read_at || null,
+				read: chapter.read || false
 			})),
 			pagination: {
 				total: pagination.total,

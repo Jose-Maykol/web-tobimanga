@@ -6,7 +6,7 @@ interface ChapterCardProps {
 }
 
 export default function ChapterCard({ chapter }: ChapterCardProps) {
-	const [isRead, setIsRead] = useState(false)
+	const [isRead, setIsRead] = useState(chapter.read)
 
 	const handleToggleReadStatus = () => {
 		setIsRead(!isRead)
