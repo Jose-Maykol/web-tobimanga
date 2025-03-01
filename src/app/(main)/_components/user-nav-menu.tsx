@@ -13,13 +13,16 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { LogOut, Settings, User } from 'lucide-react'
 import { toast } from 'sonner'
+import { useQueryClient } from '@tanstack/react-query'
 
 export default function UserNavMenu() {
 	const { isAuthenticated, getUser, logout } = useAuthStore()
 	const { username, profileImage, email } = getUser() || {}
+	const queryClient = useQueryClient()
 
 	const handleLogout = () => {
 		logout()
+		queryClient.invalidateQueries()
 		toast.success('Sesión cerrada')
 	}
 
@@ -75,7 +78,7 @@ export default function UserNavMenu() {
 				</DropdownMenu>
 			) : (
 				<Link
-					href='/login'
+					href={`/login?redirect=${encodeURIComponent(window.location.pathname)}`}
 					className='flex items-center gap-2 text-lg font-semibold md:text-base text-foreground transition-colors hover:text-foreground'
 				>
 					<Button variant='outline' size='lg'>

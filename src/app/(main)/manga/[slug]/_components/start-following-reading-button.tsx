@@ -48,10 +48,16 @@ export default function StartFollowingReadingButton({ manga }: StartFollowingRea
 	useEffect(() => {
 		if (data) {
 			setIsFollowing(true)
-			console.log(data)
 			setSelectedStatus(data.reading_status)
 		}
 	}, [data])
+
+	useEffect(() => {
+		if (!isAuthenticated) {
+			setIsFollowing(false)
+			setSelectedStatus(ReadingStatus.READING)
+		}
+	}, [isAuthenticated])
 
 	const handleStartReading = async () => {
 		if (!isAuthenticated) {
@@ -75,7 +81,7 @@ export default function StartFollowingReadingButton({ manga }: StartFollowingRea
 		setIsOpen(false)
 	}
 
-	if (isPending) {
+	if (isPending && !!isAuthenticated) {
 		return (
 			<div className='w-full rounded-sm bg-primary h-10 flex items-center justify-center'>
 				Loading...
@@ -83,7 +89,7 @@ export default function StartFollowingReadingButton({ manga }: StartFollowingRea
 		)
 	}
 
-	if (isError) {
+	if (isError && !!isAuthenticated) {
 		return <div>Error</div>
 	}
 

@@ -1,11 +1,8 @@
 'use client'
 
-import { useAuthStore } from '@/app/stores/auth-store'
-
 import { Button } from '@/components/ui/button'
-
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { LibraryBig, LogOut, Menu, Settings, User } from 'lucide-react'
+import { LibraryBig, Menu } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import UserNavMenu from './user-nav-menu'
