@@ -4,6 +4,7 @@ import api from '@/interceptors/api-interceptor'
 import { Chapter } from '@/types/chapter'
 import { CreateManga, Manga, MangaDetail, ResponseCreateManga } from '@/types/manga'
 import { Paginated } from '@/types/pagination'
+import apiAuth from '@/interceptors/api-auth-interceptor'
 
 const MangaService = {
 	async getByPage({ page, limit } = { page: 1, limit: 10 }): Promise<Paginated<Manga>> {
@@ -28,11 +29,11 @@ const MangaService = {
 	},
 
 	async getMangaChapters(
-		slug: string,
+		mangaId: string,
 		pagination: { page: number; limit: number } = { page: 1, limit: 20 }
 	): Promise<Paginated<Chapter>> {
 		const { page, limit } = pagination
-		const response = await api.get(`/mangas/${slug}/chapters`, {
+		const response = await apiAuth.get(`/mangas/${mangaId}/chapters`, {
 			params: { page, limit }
 		})
 		return MangaAdapter.getMangaChapters(response.data)

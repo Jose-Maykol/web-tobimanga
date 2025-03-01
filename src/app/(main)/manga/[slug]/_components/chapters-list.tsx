@@ -1,19 +1,19 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import ChapterCard from './chapter-card'
 import { Chapter } from '@/types/chapter'
 import { useEffect, useRef } from 'react'
 import MangaService from '@/services/api/manga-service'
 
 interface ChaptersListProps {
-	mangaSlug: string
+	mangaId: string
 }
 
-export default function ChaptersList({ mangaSlug }: ChaptersListProps) {
+export default function ChaptersList({ mangaId }: ChaptersListProps) {
 	const { data, fetchNextPage, hasNextPage, isPending, isError, isFetchingNextPage } =
 		useInfiniteQuery({
-			queryKey: ['manga-chapters', mangaSlug],
+			queryKey: ['manga-chapters', mangaId],
 			queryFn: async ({ pageParam = 1 }) => {
-				return await MangaService.getMangaChapters(mangaSlug, { page: pageParam, limit: 20 })
+				return await MangaService.getMangaChapters(mangaId, { page: pageParam, limit: 20 })
 			},
 			initialPageParam: 1,
 			getNextPageParam: (lastPage) => {

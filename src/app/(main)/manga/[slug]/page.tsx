@@ -96,7 +96,7 @@ export default function MangaDetailPage({ params }: MangaDetailPageProps) {
 							<div className='mb-4'>
 								<h2 className='text-xl font-bold'>Capitulos</h2>
 							</div>
-							<ChaptersList mangaSlug={params.slug} />
+							<ChaptersList mangaId={data.id} />
 						</section>
 					</div>
 				</div>
