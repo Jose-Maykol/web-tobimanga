@@ -1,5 +1,7 @@
+import { useAuthStore } from '@/app/stores/auth-store'
 import { Chapter } from '@/types/chapter'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 interface ChapterCardProps {
 	chapter: Chapter
@@ -7,8 +9,14 @@ interface ChapterCardProps {
 
 export default function ChapterCard({ chapter }: ChapterCardProps) {
 	const [isRead, setIsRead] = useState(chapter.read)
+	const { isAuthenticated } = useAuthStore()
 
 	const handleToggleReadStatus = () => {
+		if (!isAuthenticated) {
+			toast.error('Debes iniciar sesión para marcar un capítulo como leído')
+			return
+		}
+		toast.success(`Capítulo ${chapter.number} marcado como ${isRead ? 'no leído' : 'leído'}`)
 		setIsRead(!isRead)
 	}
 
