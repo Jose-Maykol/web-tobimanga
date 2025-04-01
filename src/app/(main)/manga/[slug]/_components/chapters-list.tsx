@@ -3,17 +3,23 @@ import ChapterCard from './chapter-card'
 import { Chapter } from '@/types/chapter'
 import { useEffect, useRef } from 'react'
 import MangaService from '@/services/api/manga-service'
+import { useAuthStore } from '@/app/stores/auth-store'
+import UserMangaService from '@/services/api/user-manga-service'
 
 interface ChaptersListProps {
 	mangaId: string
 }
 
 export default function ChaptersList({ mangaId }: ChaptersListProps) {
+	const { isAuthenticated } = useAuthStore()
 	const { data, fetchNextPage, hasNextPage, isPending, isError, isFetchingNextPage } =
 		useInfiniteQuery({
 			queryKey: ['manga-chapters', mangaId],
 			queryFn: async ({ pageParam = 1 }) => {
-				return await MangaService.getMangaChapters(mangaId, { page: pageParam, limit: 20 })
+				if (!isAuthenticated) {
+					return await MangaService.getMangaChapters(mangaId, { page: pageParam, limit: 20 })
+				}
+				return await UserMangaService.getMangaChapters(mangaId, { page: pageParam, limit: 20 })
 			},
 			initialPageParam: 1,
 			getNextPageParam: (lastPage) => {
@@ -31,16 +37,18 @@ export default function ChaptersList({ mangaId }: ChaptersListProps) {
 			}
 		})
 
-		if (observerRef.current) {
-			observer.observe(observerRef.current)
+		const currentElement = observerRef.current
+
+		if (currentElement) {
+			observer.observe(currentElement)
 		}
 
 		return () => {
-			if (observerRef.current) {
-				observer.unobserve(observerRef.current)
+			if (currentElement) {
+				observer.unobserve(currentElement)
 			}
 		}
-	}, [hasNextPage, fetchNextPage])
+	}, [hasNextPage, fetchNextPage, isFetchingNextPage])
 
 	if (isPending) {
 		return <div>Loading...</div>
