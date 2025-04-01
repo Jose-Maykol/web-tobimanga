@@ -1,4 +1,5 @@
 import { useAuthStore } from '@/app/stores/auth-store'
+import chapterService from '@/services/api/chapter-service'
 import { Chapter } from '@/types/chapter'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -16,8 +17,19 @@ export default function ChapterCard({ chapter }: ChapterCardProps) {
 			toast.error('Debes iniciar sesión para marcar un capítulo como leído')
 			return
 		}
-		toast.success(`Capítulo ${chapter.number} marcado como ${isRead ? 'no leído' : 'leído'}`)
-		setIsRead(!isRead)
+
+		try {
+			if (isRead === false) {
+				chapterService.read(chapter.id)
+			} else {
+				chapterService.unread(chapter.id)
+			}
+			toast.success(`Capítulo ${chapter.number} marcado como ${isRead ? 'no leído' : 'leído'}`)
+			setIsRead(!isRead)
+		} catch (error) {
+			// TODO: manejar error
+			toast.error('Error al cambiar el estado de lectura del capítulo')
+		}
 	}
 
 	return (
