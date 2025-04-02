@@ -14,7 +14,7 @@ export default function ChaptersList({ mangaId }: ChaptersListProps) {
 	const { isAuthenticated } = useAuthStore()
 	const { data, fetchNextPage, hasNextPage, isPending, isError, isFetchingNextPage } =
 		useInfiniteQuery({
-			queryKey: ['manga-chapters', mangaId],
+			queryKey: ['manga-chapters', mangaId, isAuthenticated],
 			queryFn: async ({ pageParam = 1 }) => {
 				if (!isAuthenticated) {
 					return await MangaService.getMangaChapters(mangaId, { page: pageParam, limit: 20 })
@@ -50,7 +50,7 @@ export default function ChaptersList({ mangaId }: ChaptersListProps) {
 		}
 	}, [hasNextPage, fetchNextPage, isFetchingNextPage])
 
-	if (isPending) {
+	if (isPending && !data) {
 		return <div>Loading...</div>
 	}
 
@@ -63,7 +63,7 @@ export default function ChaptersList({ mangaId }: ChaptersListProps) {
 			{data.pages.map((page) =>
 				page.items.map((chapter: Chapter) => <ChapterCard key={chapter.id} chapter={chapter} />)
 			)}
-			<div ref={observerRef} />
+			<div className='h-2' ref={observerRef} />
 			{isFetchingNextPage && (
 				<div className='flex items-center justify-center p-4'>
 					<div className='text-gray-600'>Cargando más capítulos...</div>

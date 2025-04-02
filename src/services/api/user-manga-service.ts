@@ -14,7 +14,7 @@ const UserMangaService = {
 	},
 
 	async getStatusReading(uuid: string) {
-		const response = await apiAuth.get(`/mangas/${uuid}/status`)
+		const response = await apiAuth.get(`users/me/mangas/${uuid}/status`)
 		console.log(response.data)
 		return response.data
 	},
