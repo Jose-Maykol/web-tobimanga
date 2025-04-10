@@ -23,21 +23,24 @@ export default function MangaCard({ manga }: MangaCardProps) {
 	return (
 		<Link
 			key={manga.id}
-			className='w-72 h-[452.66px] relative'
+			className='w-72 relative'
 			draggable='false'
 			href='/manga/[slug]'
 			as={`/manga/${manga.slug}`}
 		>
-			{!imageLoaded && (
-				<div className='absolute inset-0 w-72 bg-gray-200 rounded-lg animate-pulse'></div>
-			)}
+			<div className='relative w-full aspect-[96/151] bg-neutral-200 rounded-md overflow-hidden'>
+				{!imageLoaded && (
+					<div className='absolute inset-0 w-72 bg-gray-200 rounded-md animate-pulse'></div>
+				)}
 
-			<img
-				src={manga.coverImage}
-				alt={manga.title}
-				className='w-72 select-none pointer-events-none'
-				onLoad={handleImageLoad}
-			/>
+				<img
+					src={manga.coverImage}
+					alt={manga.title}
+					className='w-72 h-full select-none pointer-events-none object-cover absolute inset-0'
+					onLoad={handleImageLoad}
+				/>
+			</div>
+
 			<div className='p-2 absolute bottom-0 left-0 right-0 h-32 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/60 to-transparent'>
 				<h2 className='font-bold select-all'>{manga.title}</h2>
 				<p className='select-all'>Capitulo {manga.chapters}</p>

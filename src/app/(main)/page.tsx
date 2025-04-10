@@ -2,8 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query'
 import Loader from '../_components/loader/loader'
-import Link from 'next/link'
-/* import MangaCoverImage from '../_components/manga-cover-image' */
 import { Paginated } from '@/types/pagination'
 import { Manga } from '@/types/manga'
 import MangaService from '@/services/api/manga-service'
