@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 export interface Manga {
 	id: string
-	slug?: string
+	slug: string
 	title: string
 	chapters: number
 	coverImage: string
